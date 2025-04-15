@@ -79,3 +79,77 @@ button {
 button:hover {
   background: linear-gradient(135deg, #00B4FF, #0077FF); /
 }
+
+.help-link {
+  margin-top: 15px;
+  text-align: center;
+}
+.help-link a {
+  text-decoration: none;
+  color: #007BFF;
+}
+
+input[type="text"] {
+  padding: 6px;
+  width: 50px;
+  text-align: center;
+  font-size: 12px;
+  border: none; /* Remove the default border */
+  border-radius: 30px; /* Rounded corners to match button style */
+  background: linear-gradient(135deg, #4C8DFF, #0077FF); /* Matching gradient for consistency */
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Light shadow for depth */
+  transition: box-shadow 0.3s ease-in-out, background 0.4s ease; /* Smooth transitions */
+}
+
+input[type="text"]:focus {
+  outline: none; /* Remove the default outline */
+  background: linear-gradient(135deg, #00B4FF, #0077FF); /* Slight change on focus to indicate interaction */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow on focus */
+}
+
+input[type="text"]::placeholder {
+  color: rgba(255, 255, 255, 0.7); /* Lighter placeholder text for readability */
+}
+
+label {
+  font-size: 12px; /* Matching font size with other elements */
+  color: #E0E0E0; /* Light gray color for consistency */
+  font-weight: 500; /* Medium font weight for readability */
+  margin-bottom: 8px; /* Slight margin to separate from the input */
+  letter-spacing: 1px; /* Subtle letter-spacing to match the overall design */
+  text-transform: uppercase; /* For a premium, modern look */
+  display: inline-block; /* Ensures the label behaves as a block element */
+}
+
+#successMessage {
+  display: none;
+  color: #4C8DFF; /* Use the same accent color from the gradient */
+  font-weight: 600; /* Bold text for emphasis */
+  font-size: 16px; /* Ensure it's readable */
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent dark background */
+  margin-top: 12px; /* Adds space above the success message */
+  padding: 6px 6px; /* Padding for better spacing */
+  border-radius: 12px; /* Rounded corners to match the overall style */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Light shadow for depth */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for visibility */
+  text-transform: uppercase; /* Matching premium look */
+}
+
+#successMessage.show {
+  display: block; /* Show when success happens */
+  animation: flash 1.5s ease-in-out infinite; /* Smooth animation */
+}
+
+
+@keyframes flash {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

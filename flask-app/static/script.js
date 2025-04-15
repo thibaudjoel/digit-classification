@@ -4,6 +4,7 @@ ctx.lineWidth = 15;
 ctx.strokeStyle = "white"; // Sets the stroke color to blue
 
 let isDrawing = false;
+let hasDrawn = false;
 let x = 0;
 let y = 0;
 
@@ -17,6 +18,7 @@ canvas.addEventListener("mousedown", (e) => {
 // Draw when the mouse moves
 canvas.addEventListener("mousemove", (e) => {
   if (!isDrawing) return;
+  hasDrawn = true;
   ctx.beginPath();
   ctx.lineCap = 'round';
   ctx.moveTo(x, y);
@@ -55,3 +57,11 @@ document.getElementById("predictBtn").addEventListener("click", async () => {
   alert(`Prediction: ${res_json.prediction}`);
 } 
 );
+
+// Prevent form submission if canvas is empty
+document.getElementById('digitForm').addEventListener('submit', function(e) {
+  if (!hasDrawn) {
+    alert('Please draw something before submitting.');
+    e.preventDefault();
+  }
+});

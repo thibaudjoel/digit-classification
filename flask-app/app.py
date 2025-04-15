@@ -29,6 +29,10 @@ def index():
         return jsonify({"prediction": float(prediction)})
     return render_template("index.html")
 
+@app.route('/labeling', methods=["GET", "POST"])
+def labeling():
+    return render_template('labeling.html')
+
 
 if __name__ == "__main__":
     debug=os.environ.get("FLASK_DEBUG", "false").lower() == "true"

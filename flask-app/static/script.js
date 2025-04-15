@@ -18,6 +18,7 @@ canvas.addEventListener("mousedown", (e) => {
 canvas.addEventListener("mousemove", (e) => {
   if (!isDrawing) return;
   ctx.beginPath();
+  ctx.lineCap = 'round';
   ctx.moveTo(x, y);
   ctx.lineTo(e.offsetX, e.offsetY);
   ctx.stroke();

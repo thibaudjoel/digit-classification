@@ -1,18 +1,12 @@
 from flask import Flask, render_template, request, jsonify
 import numpy as np
 import tensorflow as tf
-from utils import set_up_dirs, standardize_img
+from utils import set_up_dirs, standardize_img, save_data
 import os
-import uuid
-import json
-
 
 app = Flask(__name__)
-
 model = tf.keras.models.load_model("model.keras")
-
 set_up_dirs()
-
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -33,24 +27,10 @@ def labeling():
         drawing = request.json.get("drawing")
         img = standardize_img(drawing)
         digit = int(digit)
-
-        # Save it to a file
-        filename = f"{uuid.uuid4()}.png"
-        img.save(f"labeled_data/imgs/{filename}")
-
-        # Load from JSON
-        with open("labeled_data/file_to_digit.json", "r") as f:
-            file_to_digit = json.load(f)
-
-        file_to_digit[filename] = digit
-
-        # Save to JSON
-        with open("labeled_data/file_to_digit.json", "w") as f:
-            json.dump(file_to_digit, f)
+        save_data(img, digit)
 
     return render_template("labeling.html")
 
 
 if __name__ == "__main__":
-    debug = True  # os.environ.get("FLASK_DEBUG", "true").lower() == "true"
-    app.run(debug=debug, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

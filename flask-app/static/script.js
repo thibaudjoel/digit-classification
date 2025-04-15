@@ -7,30 +7,68 @@ let isDrawing = false;
 let hasDrawn = false;
 let x = 0;
 let y = 0;
+// Helper: Get coordinates from mouse or touch event
+function getXY(e) {
+  if (e.touches) {
+    return {
+      x: e.touches[0].clientX - canvas.getBoundingClientRect().left,
+      y: e.touches[0].clientY - canvas.getBoundingClientRect().top
+    };
+  }
+  return {
+    x: e.offsetX,
+    y: e.offsetY
+  };
+}
 
-// Start drawing when mouse is pressed
+// MOUSE EVENTS
 canvas.addEventListener("mousedown", (e) => {
   isDrawing = true;
-  x = e.offsetX;
-  y = e.offsetY;
+  const pos = getXY(e);
+  x = pos.x;
+  y = pos.y;
 });
 
-// Draw when the mouse moves
 canvas.addEventListener("mousemove", (e) => {
   if (!isDrawing) return;
   hasDrawn = true;
+  const pos = getXY(e);
   ctx.beginPath();
   ctx.lineCap = 'round';
   ctx.moveTo(x, y);
-  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.lineTo(pos.x, pos.y);
   ctx.stroke();
-  
-  x = e.offsetX;
-  y = e.offsetY;
+  x = pos.x;
+  y = pos.y;
 });
 
-// Stop drawing when mouse is released
 canvas.addEventListener("mouseup", () => {
+  isDrawing = false;
+});
+
+// TOUCH EVENTS
+canvas.addEventListener("touchstart", (e) => {
+  e.preventDefault(); // Prevent scrolling
+  isDrawing = true;
+  const pos = getXY(e);
+  x = pos.x;
+  y = pos.y;
+});
+
+canvas.addEventListener("touchmove", (e) => {
+  if (!isDrawing) return;
+  hasDrawn = true;
+  const pos = getXY(e);
+  ctx.beginPath();
+  ctx.lineCap = 'round';
+  ctx.moveTo(x, y);
+  ctx.lineTo(pos.x, pos.y);
+  ctx.stroke();
+  x = pos.x;
+  y = pos.y;
+});
+
+canvas.addEventListener("touchend", () => {
   isDrawing = false;
 });
 
@@ -47,7 +85,7 @@ document.getElementById("predictBtn").addEventListener("click", async () => {
   const response = await fetch('/', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({ image: base64Image })
   });
@@ -64,4 +102,25 @@ document.getElementById('digitForm').addEventListener('submit', function(e) {
     alert('Please draw something before submitting.');
     e.preventDefault();
   }
+  // Get digit input
+  const digit = document.getElementById('digit').value;
+
+  // Convert canvas drawing to base64 image
+  const imageData = canvas.toDataURL('image/png'); // base64-encoded PNG
+
+  // Prepare form data
+  const formData = new FormData();
+  formData.append('digit', digit);
+  formData.append('drawing', imageData);
+
+  // Send to backend
+  fetch('/labeling', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: formData
+  })
+  .then(res => res.ok ? alert('Submitted!') : alert('Error submitting form.'))
+  .catch(err => console.error('Submission failed:', err));
 });

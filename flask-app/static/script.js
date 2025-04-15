@@ -82,6 +82,9 @@ document.getElementById("resetBtn").addEventListener("click", () => {
 
 const predictBtn = document.getElementById("predictBtn");
 if (predictBtn) predictBtn.addEventListener("click", async () => {
+  if (!hasDrawn) {
+    return;
+  }
   // Convert the canvas to a base64-encoded PNG image
   const base64Image = canvas.toDataURL("image/png");
 
@@ -96,7 +99,22 @@ if (predictBtn) predictBtn.addEventListener("click", async () => {
 
   // Parse the response from the server
   const res_json = await response.json();
-  alert(`Prediction: ${res_json.prediction}`);
+  const predictMessage = document.getElementById("predictMessage");
+  predictMessage.innerHTML = "Prediction: " + res_json.prediction;
+  predictMessage.style.display = "block";
+  predictMessage.style.opacity = 1;
+  predictMessage.classList.add("fadeIn");
+
+  // Display the message for a short time (e.g., 3 seconds) then fade out
+  setTimeout(function() {
+      predictMessage.style.opacity = 0;  // Start fade-out
+  }, 3000); // Message will stay for 3 seconds
+
+  // After the fade-out duration, hide the message again
+  setTimeout(function() {
+      predictMessage.style.display = "none";  // Hide after fade-out is complete
+  }, 5000); // Hide after 5 seconds (2 seconds fade-out)
+  // alert(`Prediction: ${res_json.prediction}`);
 } 
 );
 
@@ -113,11 +131,6 @@ if (digitForm) {
 
     // Convert canvas drawing to base64 image
     const imageData = canvas.toDataURL('image/png'); // base64-encoded PNG
-
-    // Prepare form data
-    // const formData = new FormData();
-    // formData.append('digit', digit);
-    // formData.append('drawing', imageData);
 
     // Send to backend
     fetch('/labeling', {

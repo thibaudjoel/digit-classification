@@ -8,12 +8,17 @@
 </head>
 <body>
     <div class="container">
-        <h1>Draw a digit</h1>
+        <h1>Draw a digit to predict</h1>
         <canvas id="myCanvas" width="504" height="504"></canvas>
         <br>
         <button id="resetBtn">Reset</button>
         <button id="predictBtn">Predict</button>
-        <a href="{{ url_for('labeling') }}">Help us improving the model!</a>
+        <br>
+        <div id="predictMessage">
+        </div>
+        <div class="help-link">
+            <a href="{{ url_for('labeling') }}">Help us improve the model!</a>
+        </div>
       </div>
     
       <script src="{{ url_for('static', filename='script.js') }}"></script>

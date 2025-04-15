@@ -8,6 +8,7 @@ app = Flask(__name__)
 model = tf.keras.models.load_model("model.keras")
 set_up_dirs()
 
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":

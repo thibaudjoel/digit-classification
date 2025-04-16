@@ -84,6 +84,9 @@ canvas.addEventListener("touchend", () => {
 // Save the canvas as an image
 document.getElementById("resetBtn").addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (digitForm) {
+    digitForm.reset();
+  }
   hasDrawn = false;
 });
 
@@ -127,8 +130,8 @@ if (predictBtn) predictBtn.addEventListener("click", async () => {
       const digit = document.getElementById('digit').value;
 
       // Convert canvas drawing to base64 image
-      const imageData = canvas.toDataURL('image/png'); // base64-encoded PNG
-
+      const imageData = canvas.toDataURL('image/png');
+      console.log("success1")
       // Send to backend
       fetch('/labeling', {
         method: 'POST',
@@ -137,21 +140,30 @@ if (predictBtn) predictBtn.addEventListener("click", async () => {
         },
         body: JSON.stringify({ drawing: imageData, digit: digit })
       })
-      digitForm.reset();
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-      hasDrawn = false;
+        .then(res => {
+          if (res.ok) {
+            digitForm.reset();
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+            hasDrawn = false;
+            console.log("res ok")
 
-      // Show success message with flash effect
-      const successMessage = document.getElementById("successMessage");
-      successMessage.classList.add("flash");
-
-      // Hide the success message after the flash effect 
-      setTimeout(() => {
-        successMessage.classList.remove("flash");
-      }, 1500);
-    
-      // .then(res => res.ok ? alert('Submitted!') : alert('Error submitting form.'))
-      // .catch(err => console.error('Submission failed:', err));
+            // Show success message with flash effect
+            const successMessage = document.getElementById("successMessage");
+            successMessage.classList.add("flash");
+            console.log("success")
+            // Hide the success message after the flash effect 
+            setTimeout(() => {
+              successMessage.classList.remove("flash");
+            }, 1500);
+          }
+          else {
+            alert('Error submitting data.');
+          }
+        })
+        .catch(err => {
+          console.error('Submission failed:', err);
+          alert('Network or server error.');
+        });
     })
   }
 });

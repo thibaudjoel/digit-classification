@@ -104,46 +104,47 @@ if (predictBtn) predictBtn.addEventListener("click", async () => {
   predictMessage.style.opacity = 1;
 
   // Display the message then fade out
-  setTimeout(function() {
-      predictMessage.style.opacity = 0;
-} 
-);
+  setTimeout(function () {
+    predictMessage.style.opacity = 0;
+  }
+  );
 
-const digitForm = document.getElementById('digitForm');
-if (digitForm) {
-  digitForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (!hasDrawn) {
-      alert('Please draw something before submitting.');
-      return;
-    }
-    const digit = document.getElementById('digit').value;
+  const digitForm = document.getElementById('digitForm');
+  if (digitForm) {
+    digitForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!hasDrawn) {
+        alert('Please draw something before submitting.');
+        return;
+      }
+      const digit = document.getElementById('digit').value;
 
-    // Convert canvas drawing to base64 image
-    const imageData = canvas.toDataURL('image/png'); // base64-encoded PNG
+      // Convert canvas drawing to base64 image
+      const imageData = canvas.toDataURL('image/png'); // base64-encoded PNG
 
-    // Send to backend
-    fetch('/labeling', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ drawing: imageData, digit: digit })
-    })
-    digitForm.reset(); 
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-    hasDrawn = false;
+      // Send to backend
+      fetch('/labeling', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ drawing: imageData, digit: digit })
+      })
+      digitForm.reset();
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+      hasDrawn = false;
 
-    // Show success message with flash effect
-    const successMessage = document.getElementById("successMessage");
-    successMessage.classList.add("flash");
+      // Show success message with flash effect
+      const successMessage = document.getElementById("successMessage");
+      successMessage.classList.add("flash");
 
-    // Hide the success message after the flash effect 
-    setTimeout(() => {
-      successMessage.classList.remove("flash");
-    }, 1500);
+      // Hide the success message after the flash effect 
+      setTimeout(() => {
+        successMessage.classList.remove("flash");
+      }, 1500);
     
-    // .then(res => res.ok ? alert('Submitted!') : alert('Error submitting form.'))
-    // .catch(err => console.error('Submission failed:', err));
-  })
-};
+      // .then(res => res.ok ? alert('Submitted!') : alert('Error submitting form.'))
+      // .catch(err => console.error('Submission failed:', err));
+    })
+  }
+});

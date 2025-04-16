@@ -106,7 +106,7 @@ if (predictBtn) predictBtn.addEventListener("click", async () => {
   // Display the message then fade out
   setTimeout(function () {
     predictMessage.style.opacity = 0;
-  }
+  }, 2000
   );
 
   const digitForm = document.getElementById('digitForm');

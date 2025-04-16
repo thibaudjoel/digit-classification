@@ -1,12 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 import numpy as np
 import tensorflow as tf
-from utils import set_up_dirs, standardize_img, upload_data
+from utils import standardize_img, upload_data
 import os
 
 app = Flask(__name__)
 model = tf.keras.models.load_model("model.keras")
-set_up_dirs()
 
 
 @app.route("/", methods=["GET", "POST"])

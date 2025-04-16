@@ -13,7 +13,7 @@ set_up_dirs()
 def index():
     if request.method == "POST":
         img = standardize_img(request.json["image"])
-        np_array = np_array.reshape(28, 28, 1)
+        np_array = np.array(img).reshape(1, 28, 28, 1)
         prediction = np.argmax(model.predict(np_array))
         return jsonify({"prediction": float(prediction)})
     return render_template("index.html")

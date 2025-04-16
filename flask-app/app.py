@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import numpy as np
 import tensorflow as tf
-from utils import set_up_dirs, standardize_img, save_data
+from utils import set_up_dirs, standardize_img, upload_data
 import os
 
 app = Flask(__name__)
@@ -26,7 +26,7 @@ def labeling():
         drawing = request.json.get("drawing")
         img = standardize_img(drawing)
         digit = int(digit)
-        save_data(img, digit)
+        upload_data(img, digit)
 
     return render_template("labeling.html")
 

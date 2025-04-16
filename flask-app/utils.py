@@ -4,6 +4,7 @@ from PIL import Image
 import base64
 import io
 import uuid
+from google.cloud import storage
 
 
 def set_up_dirs():
@@ -34,14 +35,31 @@ def standardize_img(img):
     return image.resize((28, 28))
 
 
-def save_data(img, digit):
-    filename = f"{uuid.uuid4()}.png"
-    img.save(f"labeled_data/imgs/{filename}")
+def upload_data(img, digit):
+    filename = f"{digit}-{uuid.uuid4()}.png"
+    # Convert image to bytes in memory
+    img_byte_arr = io.BytesIO()
+    img.save(img_byte_arr, format="PNG")
+    img_byte_arr.seek(0)
+    # img.save(f"labeled_data/imgs/{filename}")
+    upload_blob("label-data-bucket", img_byte_arr, f"labeled_data/imgs/{filename}")
 
-    with open("labeled_data/file_to_digit.json", "r") as f:
-        file_to_digit = json.load(f)
 
-    file_to_digit[filename] = digit
+def upload_blob(bucket_name, img_byte_arr, destination_blob_name):
+    """Uploads a file to the bucket."""
+    # The ID of your GCS bucket
+    # bucket_name = "your-bucket-name"
+    # The path to your file to upload
+    # source_file_name = "local/path/to/file"
+    # The ID of your GCS object
+    # destination_blob_name = "storage-object-name"
 
-    with open("labeled_data/file_to_digit.json", "w") as f:
-        json.dump(file_to_digit, f)
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+
+    # Upload to Google Cloud Storage
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+    blob.upload_from_file(img_byte_arr, content_type="image/png")

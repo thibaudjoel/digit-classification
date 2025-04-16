@@ -6,6 +6,7 @@ from google.cloud import storage
 
 
 def standardize_img(img):
+    """Standardizes the image by converting it to grayscale and resizing it to 28x28 pixels."""
     encoded = img.split(",", 1)[1]
     binary_data = base64.b64decode(encoded)
     image = Image.open(io.BytesIO(binary_data)).convert("L")  # Grayscale
@@ -14,6 +15,7 @@ def standardize_img(img):
 
 
 def upload_data(img, digit):
+    """Uploads the image to Google Cloud Storage with a unique filename based on the digit."""
     filename = f"{digit}-{uuid.uuid4()}.png"
     # Convert image to bytes in memory
     img_byte_arr = io.BytesIO()

@@ -121,7 +121,8 @@ label {
 }
 
 #successMessage {
-  display: none;
+  display: block;
+  opacity: 0;
   color: #4C8DFF; 
   font-weight: 600;
   font-size: 16px; 
@@ -130,15 +131,12 @@ label {
   padding: 6px 6px; 
   border-radius: 12px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
-  transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for visibility */
   text-transform: uppercase; 
 }
 
-#successMessage.show {
-  display: block; /* Show when success happens */
-  animation: flash 1.5s ease-in-out infinite; /* Smooth animation */
+.flash {
+  animation: flash 1.5s ease-in-out infinite;
 }
-
 
 @keyframes flash {
   0% {
@@ -153,7 +151,7 @@ label {
 }
 
 #predictMessage {
-  display: none;
+  display: block;
   color: #4C8DFF; 
   font-weight: 600;
   font-size: 16px;
@@ -163,14 +161,6 @@ label {
   padding: 10px 16px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: opacity 2s ease-out, transform 0.3s ease;
+  transition: opacity 1s ease-out;
   letter-spacing: 1px;
-}
-
-/* Fade in effect */
-.fadeIn {
-  display: block;
-  opacity: 1;
-  transition: opacity 1s ease-in, transform 0.3s ease;
-  transform: translateY(0);
 }

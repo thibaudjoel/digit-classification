@@ -101,20 +101,11 @@ if (predictBtn) predictBtn.addEventListener("click", async () => {
   const res_json = await response.json();
   const predictMessage = document.getElementById("predictMessage");
   predictMessage.innerHTML = "Prediction: " + res_json.prediction;
-  predictMessage.style.display = "block";
   predictMessage.style.opacity = 1;
-  predictMessage.classList.add("fadeIn");
 
-  // Display the message for a short time (e.g., 3 seconds) then fade out
+  // Display the message then fade out
   setTimeout(function() {
-      predictMessage.style.opacity = 0;  // Start fade-out
-  }, 3000); // Message will stay for 3 seconds
-
-  // After the fade-out duration, hide the message again
-  setTimeout(function() {
-      predictMessage.style.display = "none";  // Hide after fade-out is complete
-  }, 5000); // Hide after 5 seconds (2 seconds fade-out)
-  // alert(`Prediction: ${res_json.prediction}`);
+      predictMessage.style.opacity = 0;
 } 
 );
 
@@ -126,7 +117,6 @@ if (digitForm) {
       alert('Please draw something before submitting.');
       return;
     }
-    // Get digit input
     const digit = document.getElementById('digit').value;
 
     // Convert canvas drawing to base64 image
@@ -140,22 +130,18 @@ if (digitForm) {
       },
       body: JSON.stringify({ drawing: imageData, digit: digit })
     })
-    digitForm.reset(); // Clears the digit input
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clears the canvas
+    digitForm.reset(); 
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
     hasDrawn = false;
 
     // Show success message with flash effect
     const successMessage = document.getElementById("successMessage");
-    successMessage.style.display = "block"; // Make the message visible
-
-    // Flash the message by adding the animation class
     successMessage.classList.add("flash");
 
-    // Hide the success message after the flash effect (0.5s)
+    // Hide the success message after the flash effect 
     setTimeout(() => {
-      successMessage.style.display = "none"; // Hide the message completely
-      successMessage.classList.remove("flash"); // Reset animation class
-    }, 1000);
+      successMessage.classList.remove("flash");
+    }, 1500);
     
     // .then(res => res.ok ? alert('Submitted!') : alert('Error submitting form.'))
     // .catch(err => console.error('Submission failed:', err));

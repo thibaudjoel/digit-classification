@@ -145,7 +145,7 @@ label {
 }
 
 .flash {
-  animation: flash 1.5s ease-in-out infinite;
+  animation: flash 2s ease-in-out infinite;
 }
 
 @keyframes flash {

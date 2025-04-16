@@ -118,6 +118,7 @@ if (predictBtn) predictBtn.addEventListener("click", async () => {
     predictMessage.style.opacity = 0;
   }, 2000
   );
+});
 
   const digitForm = document.getElementById('digitForm');
   if (digitForm) {
@@ -131,7 +132,6 @@ if (predictBtn) predictBtn.addEventListener("click", async () => {
 
       // Convert canvas drawing to base64 image
       const imageData = canvas.toDataURL('image/png');
-      console.log("success1")
       // Send to backend
       fetch('/labeling', {
         method: 'POST',
@@ -145,16 +145,14 @@ if (predictBtn) predictBtn.addEventListener("click", async () => {
             digitForm.reset();
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
             hasDrawn = false;
-            console.log("res ok")
 
             // Show success message with flash effect
             const successMessage = document.getElementById("successMessage");
             successMessage.classList.add("flash");
-            console.log("success")
             // Hide the success message after the flash effect 
             setTimeout(() => {
               successMessage.classList.remove("flash");
-            }, 1500);
+            }, 2000);
           }
           else {
             alert('Error submitting data.');
@@ -165,5 +163,4 @@ if (predictBtn) predictBtn.addEventListener("click", async () => {
           alert('Network or server error.');
         });
     })
-  }
-});
+  };

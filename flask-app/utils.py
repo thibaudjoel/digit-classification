@@ -24,7 +24,7 @@ def upload_data(img, digit):
 
 def upload_blob(bucket_name, img_byte_arr, destination_blob_name):
     """Uploads a file to the bucket."""
-    
+
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)

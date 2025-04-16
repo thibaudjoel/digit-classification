@@ -1,8 +1,7 @@
-console.log("Script.js loaded");
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 ctx.lineWidth = 15;
-ctx.strokeStyle = "white"; // Sets the stroke color to blue
+ctx.strokeStyle = "white";
 
 let isDrawing = false;
 let hasDrawn = false;
@@ -12,9 +11,17 @@ let y = 0;
 // Helper: Get coordinates from mouse or touch event
 function getXY(e) {
   if (e.touches) {
+    const rect = canvas.getBoundingClientRect();
+    clientX = e.touches[0].clientX;
+    clientY = e.touches[0].clientY;
+
+    // Adjust for canvas scaling
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+  
     return {
-      x: e.touches[0].clientX - canvas.getBoundingClientRect().left,
-      y: e.touches[0].clientY - canvas.getBoundingClientRect().top
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY
     };
   }
   return {
@@ -44,7 +51,7 @@ canvas.addEventListener("mousemove", (e) => {
   y = pos.y;
 });
 
-canvas.addEventListener("mouseup", () => {
+document.addEventListener("mouseup", () => {
   isDrawing = false;
 });
 

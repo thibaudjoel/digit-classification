@@ -5,7 +5,7 @@ from utils import standardize_img, upload_data
 import os
 
 app = Flask(__name__)
-model = tf.keras.models.load_model("model.keras")
+model = tf.keras.models.load_model("best_model_fine_tuned.keras")
 
 
 @app.route("/", methods=["GET", "POST"])

@@ -31,14 +31,45 @@ This is a web application for digit classification using a Convolutional Neural 
 git clone https://github.com/thibaudjoel/digit-classification.git
 cd digit-classification
 ```
+### 2. Set up a virtual environment (optional but recommended)
 
-### 2. Install dependencies
+For Python 3.x, you can create a virtual environment using `venv`. This helps to isolate the dependencies for this project.
+
+- On macOS/Linux:
+
+```bash
+python3 -m venv .venv
+```
+
+- On Windows:
+
+```bash
+python -m venv .venv
+```
+
+### 3. Activate the virtual environment
+
+- On macOS/Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+- On Windows:
+
+```bash
+.\.venv\Scripts\activate
+```
+
+Once activated, your terminal should indicate that the virtual environment is active.
+
+### 4. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Train the model (optional)
+### 5. Train the model (optional)
 
 You can either train your own model or use a pre-trained one:
 

@@ -75,11 +75,7 @@ You can either train your own model or use a pre-trained one:
 
 #### Option A: Train your own model
 
-Open the Jupyter notebook:
-
-```bash
-jupyter notebook model_training.ipynb
-```
+Open the Jupyter notebook `model_training.ipynb`.
 
 Run all the cells up before the section "Finetuning" to train the model on the MNIST data. This will save the model as `best_model.keras`. You can use the code in section "Finetuning" to finetune the model on your own dataset. This will save the model as `best_model_fine_tuning.keras`. Place the model named as in the same directory as `app.py`.
 > ⚠️ Change the model path in **line 8** of `app.py` to the name of your model file.

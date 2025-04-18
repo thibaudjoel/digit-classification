@@ -34,7 +34,7 @@ def upload_blob(
         img_byte_arr: io.BytesIO,
         destination_blob_name: str
         ) -> None:
-    """Uploads a file to the bucket."""
+    """Uploads the PNG image encoded in the byte array to blob in bucket."""
 
     client = storage.Client()
     bucket = client.bucket(bucket_name)

@@ -178,3 +178,6 @@ labeled_data
 
 # keras models
 *.keras
+
+# firebase
+firebase.json

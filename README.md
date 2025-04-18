@@ -75,7 +75,7 @@ You can either train your own model or use a pre-trained one:
 
 #### Option A: Train your own model
 
-Open the Jupyter notebook `model_training.ipynb`.
+Open the Jupyter notebook `notebooks/model_training.ipynb`.
 
 Run all the cells up before the section "Finetuning" to train the model on the MNIST data. This will save the model as `best_model.keras`. You can use the code in section "Finetuning" to finetune the model on your own dataset. This will save the model as `best_model_fine_tuning.keras`. Place the model named as in the same directory as `app.py`.
 > ⚠️ Change the model path in **line 8** of `app.py` to the name of your model file.
@@ -90,7 +90,7 @@ If you've already trained the model (or downloaded one), place the model named a
 
 ## 🚀 Usage
 
-Start the Flask server:
+Start the Flask server by running the following command from your terminal (assuming you are in the `src/flask_app` directory):
 
 ```bash
 python3 app.py
@@ -110,25 +110,31 @@ You should see the digit drawing interface.
 ```
 digit-classification/
 │
-├── flask_app/                     # Flask app directory  
-│   ├── app.py                     # Flask server entry point  
-│   ├── model.keras                # Trained CNN model  
-│   ├── static/                    # Static frontend files  
-│   │   ├── script.js              # JavaScript for user interaction  
-│   │   └── style.css              # CSS styles  
-│   ├── templates/                 # HTML templates  
-│   │   ├── index.html             # Home page (digit input interface)  
-│   │   └── labeling.html          # Labeling page (for custom labeling)  
-│   └── requirements.txt           # Python dependencies (for Docker setup)  
+├── src/                           # Source code and app-related files  
+│   ├── flask_app/                 # Flask app directory  
+│   │   ├── app.py                 # Flask server entry point  
+│   │   ├── model.keras            # Trained CNN model  
+│   │   ├── static/                # Static frontend files  
+│   │   │   ├── script.js          # JavaScript for user interaction  
+│   │   │   └── style.css          # CSS styles  
+│   │   ├── templates/             # HTML templates  
+│   │   │   ├── index.html         # Home page (digit input interface)  
+│   │   │   └── labeling.html      # Labeling page (for custom labeling)  
+│   │   ├── requirements.txt       # Python dependencies (for Docker setup) 
+│   │   └── dockerfile             # Dockerfile for containerization   
+│   └── utils.py                   # Utility functions  
 │
-├── Dockerfile                     # Dockerfile for containerization  
+├── notebooks/                     # Jupyter notebooks directory  
+│   ├── model_training.ipynb       # Jupyter notebook for training the model  
+│   ├── exploration.ipynb          # Data exploration
+│   ├── custom_data_preparation.ipynb  # Preprocessing and handling custom data  
+│   └── utils.py                   # Utility functions  
+│
+├── tests/                         # Unit tests directory
 ├── .gitignore                     # Git ignored files and directories  
 ├── README.md                      # Project documentation  
-├── model_training.ipynb           # Jupyter notebook for training the model  
-├── exploration.ipynb              # Data exploration and EDA  
-├── custom_data_preparation.ipynb  # Preprocessing and handling custom data  
-├── requirements.txt               # Project-wide Python dependencies  
-└── utils.py                       # Utility functions
+└── requirements.txt               # Project-wide Python dependencies  
+
 ```
 
 ---

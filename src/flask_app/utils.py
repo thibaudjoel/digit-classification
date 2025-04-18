@@ -15,7 +15,7 @@ def standardize_img(img: str) -> Image.Image:
     return image.resize((28, 28))
 
 
-def upload_data(img: Image.Image, digit: int):
+def upload_data(img: Image.Image, digit: int) -> None:
     """Uploads the image to Google Cloud Storage with a unique
         filename based on the digit."""
     filename = f"{digit}-{uuid.uuid4()}.png"
@@ -42,4 +42,6 @@ def upload_blob(
     try:
         blob.upload_from_file(img_byte_arr, content_type="image/png")
     except Exception as e:
-        print(f"Upload failed: {e}")
+        raise Exception(
+            f"Failed to upload {destination_blob_name} to {bucket_name}: {e}"
+        )
